@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
 
 import { CreateNoteDto } from './dtos/create-note.dto';
 import {NotesService} from './notes.service';
@@ -14,8 +14,10 @@ export class NotesController {
   }
 
   @Get('/:id')
-  getNote(@Param('id') id: string) {
-    return this.notesService.findOne(id);
+  async getNote(@Param('id') id: string) {
+    const note = await this.notesService.findOne(id);
+    if (!note) throw new NotFoundException('note not found');
+    return note;
   }
 
   @Post()
