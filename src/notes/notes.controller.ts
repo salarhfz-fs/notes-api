@@ -22,7 +22,7 @@ export class NotesController {
 
   @Post()
   createNote(@Body() body: CreateNoteDto) {
-    return this.notesService.create(body.content);
+    return this.notesService.create(body);
   }
 }
 

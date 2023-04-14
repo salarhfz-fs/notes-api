@@ -1,21 +1,14 @@
 import { Injectable } from '@nestjs/common';
+
+import {CrudService} from 'src/common/crud-service.service';
 import {Note} from './models/note.model';
 import {NotesFileRepository} from './notes-file.repository';
 
 @Injectable()
-export class NotesService {
+export class NotesService extends CrudService<Note> {
 
-  constructor(private notesFileRepository: NotesFileRepository) {}
-
-  findOne(id: string): Promise<Note> {
-    return this.notesFileRepository.findOne(id)
+  constructor(private notesFileRepository: NotesFileRepository) {
+    super(notesFileRepository);
   }
 
-  findAll(): Promise<Array<Note>> {
-    return this.notesFileRepository.findAll();
-  }
-
-  create(content: string): Promise<Note> {
-    return this.notesFileRepository.create(content);
-  }
 }
