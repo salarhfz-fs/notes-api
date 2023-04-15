@@ -1,6 +1,7 @@
-import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post } from '@nestjs/common';
 
 import { CreateNoteDto } from './dtos/create-note.dto';
+import {UpdateNoteDto} from './dtos/update-note.dto';
 import {NotesService} from './notes.service';
 
 @Controller('notes')
@@ -14,15 +15,23 @@ export class NotesController {
   }
 
   @Get('/:id')
-  async getNote(@Param('id') id: string) {
-    const note = await this.notesService.findOne(id);
-    if (!note) throw new NotFoundException('note not found');
-    return note;
+  getNote(@Param('id') id: string) {
+    return this.notesService.findOne(id);
   }
 
   @Post()
   createNote(@Body() body: CreateNoteDto) {
     return this.notesService.create(body);
+  }
+
+  @Patch('/:id')
+  updateNote(@Param('id') id: string, @Body() body: UpdateNoteDto) {
+    return this.notesService.update(id, body);
+  }
+
+  @Delete('/:id')
+  removeNote(@Param('id') id: string) {
+    return this.notesService.remove(id);
   }
 }
 
