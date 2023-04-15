@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+const cookieSession = require('cookie-session');
 
 import { AppModule } from './app.module';
 
@@ -10,7 +11,9 @@ async function bootstrap() {
       whitelist: true,
     })
   );
-
+  app.use(cookieSession({
+    keys: [process.env.COOKIE_SECRET],
+  }));
   await app.listen(4000);
 }
 bootstrap();
