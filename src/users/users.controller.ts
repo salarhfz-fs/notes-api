@@ -1,9 +1,12 @@
 import { Controller, Get, Post, Param, Body, Query, Patch, Delete } from '@nestjs/common';
 
+import {Serialize} from 'src/common/decorators/serialize.decorator';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import {UserDto} from './dtos/user.dto';
 import {UsersService} from './users.service';
 
+@Serialize(UserDto)
 @Controller('users')
 export class UsersController {
 
